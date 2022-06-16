@@ -1,16 +1,16 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 
-const service = axios.create(); // Request interceptors
+const service = axios.create() // Request interceptors
 
 service.interceptors.request.use(
     (config: AxiosRequestConfig) => {
         // do something
-        return config;
+        return config
     },
     (error: any) => {
-        Promise.reject(error);
+        Promise.reject(error)
     },
-); // Response interceptors
+) // Response interceptors
 
 service.interceptors.response.use(
     async (response: AxiosResponse) => {
@@ -18,8 +18,8 @@ service.interceptors.response.use(
     },
     (error: any) => {
         // do something
-        return Promise.reject(error);
+        return Promise.reject(error)
     },
-);
+)
 
-export default service;
+export default service
