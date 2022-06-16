@@ -25,14 +25,28 @@ const list = [
         account: 'plplplp3',
         password: '9ifd09r09fj3',
     },
+    {
+        id: '4',
+        appName: '招行',
+        account: 'rtyurtyu',
+        password: '21343214',
+    },
 ]
 </script>
 
 <template>
-    <div>
-        <el-card v-for="item in list" :key="item.id" class="box-card">
+    <div class="list-box">
+        <el-card v-for="item in list" :key="item.id" class="card-box">
+            <template #header>
+                <div class="card-header">
+                    <span class="card-header-text">
+                        {{ `『${item.appName}』` }}
+                    </span>
+                    <el-button type="text">编辑</el-button>
+                </div>
+            </template>
             <div class="text item">
-                <el-descriptions :title="item.appName" :column="2">
+                <el-descriptions :column="2">
                     <el-descriptions-item label="账号">
                         {{ item.account }}
                     </el-descriptions-item>
@@ -46,7 +60,27 @@ const list = [
 </template>
 
 <style lang="less" scoped>
-.box-card {
+@import '@/styles/common';
+
+.list-box {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .no-scrollbar();
+}
+
+.card-box {
     margin-bottom: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header-text {
+    font-style: italic;
 }
 </style>
