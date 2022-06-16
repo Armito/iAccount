@@ -8,7 +8,10 @@ const jump = (path: string) => {
 </script>
 
 <template>
-    123456
-    <el-button type="warning" @click="() => jump('/list')">list</el-button>
-    <el-button type="warning" @click="() => jump('/vueuse')">vueuse</el-button>
+    <el-button type="primary" @click="() => jump('/games/saolei')">
+        扫雷
+    </el-button>
+    <el-button type="primary" @click="() => jump('/games/zhizhu')">
+        蜘蛛纸牌
+    </el-button>
 </template>
