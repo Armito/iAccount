@@ -6,7 +6,7 @@ module.exports = {
     // 不使用 tab 缩进，而使用空格
     useTabs: false,
     // 行尾需要有分号
-    semi: true,
+    semi: false,
     // 使用单引号代替双引号
     singleQuote: true,
     // 对象的 key 仅在必要时用引号
@@ -34,4 +34,4 @@ module.exports = {
     htmlWhitespaceSensitivity: 'css',
     // 换行符使用 lf
     endOfLine: 'auto',
-};
+}

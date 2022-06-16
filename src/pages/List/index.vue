@@ -1,3 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ElButton } from 'element-plus'
+</script>
 
-<template>list</template>
+<template>
+    <el-button type="warning">list</el-button>
+</template>
