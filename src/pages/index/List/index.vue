@@ -1,48 +1,169 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import {
     ElCard,
     ElButton,
     ElDescriptions,
     ElDescriptionsItem,
+    ElDialog,
+    ElForm,
+    ElFormItem,
+    ElInput,
+    FormInstance,
+    ElPopconfirm,
 } from 'element-plus'
+import { Delete, Edit } from '@element-plus/icons-vue'
+import { v4 as uuidV4 } from 'uuid'
 
-const list = [
+interface Account {
+    id: string
+    appName: string
+    account: string
+    password: string
+}
+
+const accountList = ref<Account[]>([
     {
-        id: '1',
+        id: uuidV4(),
         appName: 'weixin',
         account: 'sadijdj923ij',
         password: '943u9i43',
     },
     {
-        id: '2',
+        id: uuidV4(),
         appName: 'qq',
         account: 'sadsad',
         password: '34556654t45',
     },
     {
-        id: '3',
+        id: uuidV4(),
         appName: 'weibo',
         account: 'plplplp3',
         password: '9ifd09r09fj3',
     },
     {
-        id: '4',
+        id: uuidV4(),
         appName: '招行',
         account: 'rtyurtyu',
         password: '21343214',
     },
-]
+])
+
+const formRef = ref<FormInstance>()
+
+const rules = {
+    appName: [{ required: true, trigger: 'blur' }],
+    account: [{ required: true, trigger: 'blur' }],
+    password: [{ required: true, trigger: 'blur' }],
+}
+
+interface FormModel {
+    appName: string
+    account: string
+    password: string
+}
+
+const formModel = ref<FormModel>({
+    appName: '',
+    account: '',
+    password: '',
+})
+
+const editDialogVisible = ref(false)
+
+const handleAddAccount = () => {
+    handleEditDialogOpen()
+}
+
+const editingAccount = ref<Account>()
+
+const handleEditAccount = (_account: Account) => {
+    const { appName, account, password } = _account
+    editingAccount.value = _account
+    formModel.value = {
+        appName,
+        account,
+        password,
+    }
+    handleEditDialogOpen()
+}
+
+const handleEditDialogOpen = () => {
+    editDialogVisible.value = true
+}
+
+const handleEditDialogClose = () => {
+    editDialogVisible.value = false
+    formModel.value = {
+        appName: '',
+        account: '',
+        password: '',
+    }
+    editingAccount.value = undefined
+}
+
+const handleEditDialogSave = () => {
+    formRef.value?.validate((valid) => {
+        if (valid) {
+            if (editingAccount.value) {
+                accountList.value = accountList.value.map((account) => {
+                    if (account.id === editingAccount.value?.id) {
+                        return {
+                            ...editingAccount.value,
+                            ...formModel.value,
+                        }
+                    } else {
+                        return account
+                    }
+                })
+            } else {
+                accountList.value.unshift({
+                    id: uuidV4(),
+                    ...formModel.value,
+                })
+            }
+            handleEditDialogClose()
+        }
+    })
+}
+
+const handleDeleteAccount = (id: string) => {
+    accountList.value = accountList.value.filter((account) => account.id !== id)
+}
 </script>
 
 <template>
     <div class="list-box">
-        <el-card v-for="item in list" :key="item.id" class="card-box">
+        <div class="list-box-add">
+            <el-button type="primary" @click="handleAddAccount">新增</el-button>
+        </div>
+
+        <el-card v-for="item in accountList" :key="item.id" class="card-box">
             <template #header>
                 <div class="card-header">
                     <span class="card-header-text">
                         {{ `『${item.appName}』` }}
                     </span>
-                    <el-button type="text">编辑</el-button>
+                    <div>
+                        <el-button
+                            type="primary"
+                            :icon="Edit"
+                            size="small"
+                            @click="() => handleEditAccount(item)"
+                        />
+                        <el-popconfirm
+                            title="Are you sure to delete this?"
+                            @confirm="() => handleDeleteAccount(item.id)"
+                        >
+                            <template #reference>
+                                <el-button
+                                    type="danger"
+                                    :icon="Delete"
+                                    size="small"
+                                />
+                            </template>
+                        </el-popconfirm>
+                    </div>
                 </div>
             </template>
             <div class="text item">
@@ -57,6 +178,39 @@ const list = [
             </div>
         </el-card>
     </div>
+
+    <el-dialog
+        v-model="editDialogVisible"
+        :title="editingAccount ? '编辑' : '新增'"
+        width="440px"
+        destroy-on-close
+        :before-close="handleEditDialogClose"
+    >
+        <el-form
+            ref="formRef"
+            :model="formModel"
+            label-width="120px"
+            :rules="rules"
+        >
+            <el-form-item label="AppName" prop="appName">
+                <el-input v-model="formModel.appName" />
+            </el-form-item>
+            <el-form-item label="Account" prop="account">
+                <el-input v-model="formModel.account" />
+            </el-form-item>
+            <el-form-item label="Password" prop="password">
+                <el-input v-model="formModel.password" />
+            </el-form-item>
+        </el-form>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="handleEditDialogClose">Cancel</el-button>
+                <el-button type="primary" @click="handleEditDialogSave">
+                    Confirm
+                </el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 
 <style lang="less" scoped>
@@ -68,6 +222,12 @@ const list = [
     overflow-y: auto;
 
     .no-scrollbar();
+}
+
+.list-box-add {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .card-box {

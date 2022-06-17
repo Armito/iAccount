@@ -27,11 +27,11 @@ const handleSelect = (key: string) => {
                 <div class="name-box">Armito's Account</div>
                 <el-menu-item index="/list">
                     <el-icon><icon-menu /></el-icon>
-                    <span>我的列表</span>
+                    <span>我的账号</span>
                 </el-menu-item>
                 <el-menu-item index="/detail">
                     <el-icon><document /></el-icon>
-                    <span>我的详情</span>
+                    <span>我的应用</span>
                 </el-menu-item>
             </el-menu>
         </el-aside>
