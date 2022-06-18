@@ -2,7 +2,7 @@
  * @Author: Armito 1656318310@qq.com
  * @Date: 2022-06-16 21:41:55
  * @LastEditors: Armito 1656318310@qq.com
- * @LastEditTime: 2022-06-18 10:38:43
+ * @LastEditTime: 2022-06-18 14:44:13
  * @FilePath: \iAccount\src\pages\index\List\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,6 +19,7 @@ import {
     ElInput,
     FormInstance,
     ElPopconfirm,
+    ElEmpty,
 } from 'element-plus'
 import { Delete, Edit } from '@element-plus/icons-vue'
 import { v4 as uuidV4 } from 'uuid'
@@ -123,6 +124,8 @@ const handleDeleteAccount = (id: string) => {
             <el-button type="primary" @click="handleAddAccount">新增</el-button>
         </div>
 
+        <el-empty v-if="!accountList.length" :image-size="200" />
+
         <el-card v-for="item in accountList" :key="item.id" class="card-box">
             <template #header>
                 <div class="card-header">
@@ -157,7 +160,7 @@ const handleDeleteAccount = (id: string) => {
                         {{ item.account }}
                     </el-descriptions-item>
                     <el-descriptions-item label="密码">
-                        {{ item.password }}
+                        {{ Array(item.password.length).fill('*').join('') }}
                     </el-descriptions-item>
                 </el-descriptions>
             </div>
@@ -184,7 +187,11 @@ const handleDeleteAccount = (id: string) => {
                 <el-input v-model="formModel.account" />
             </el-form-item>
             <el-form-item label="Password" prop="password">
-                <el-input v-model="formModel.password" />
+                <el-input
+                    v-model="formModel.password"
+                    type="password"
+                    show-password
+                />
             </el-form-item>
         </el-form>
         <template #footer>

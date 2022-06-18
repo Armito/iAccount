@@ -2,7 +2,7 @@
   "name": "iaccount",
   "private": true,
   "version": "0.0.0",
-  "main": "dist/electron-main/index.js",
+  "main": "dist/electron/index.js",
   "scripts": {
     "dev": "vite",
     "build": "rimraf dist && vite build && electron-builder",
@@ -69,10 +69,10 @@
     ]
   },
   "build": {
-    "appId": "com.smallpig.desktop",
-    "productName": "smallpig",
+    "appId": "com.iAccount.desktop",
+    "productName": "iAccount",
     "asar": true,
-    "copyright": "Copyright © 2022 smallpig",
+    "copyright": "Copyright © 2022 iAccount",
     "directories": {
       "output": "release/${version}"
     },
@@ -94,7 +94,8 @@
           ]
         }
       ],
-      "artifactName": "${productName}_${version}.${ext}"
+      "artifactName": "${productName}_${version}.${ext}",
+      "icon": "public/armito.ico"
     },
     "nsis": {
       "oneClick": false,

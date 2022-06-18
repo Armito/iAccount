@@ -2,7 +2,7 @@
  * @Author: Armito 1656318310@qq.com
  * @Date: 2022-06-18 09:10:11
  * @LastEditors: Armito 1656318310@qq.com
- * @LastEditTime: 2022-06-18 10:43:57
+ * @LastEditTime: 2022-06-18 12:41:05
  * @FilePath: \iAccount\src\utils\excel.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -18,8 +18,12 @@ export const readExcel = (
     fileName: string,
     callback: (data: Account[]) => void,
 ) => {
-    const data = xlsx.parse(`./my/${fileName}.xls`)
-    callback(transformToRenderData(data as ExcelData))
+    try {
+        const data = xlsx.parse(`./${fileName}.xls`)
+        callback(transformToRenderData(data as ExcelData))
+    } catch (err) {
+        callback([])
+    }
 }
 
 export const writeExcel = (
@@ -28,7 +32,7 @@ export const writeExcel = (
     callback?: () => void,
 ) => {
     const _buffer = xlsx.build(transformToExcelData(data))
-    fs.writeFile(`./my/${fileName}.xls`, _buffer, (err) => {
+    fs.writeFile(`./${fileName}.xls`, _buffer, (err) => {
         if (err) {
             throw err
         }

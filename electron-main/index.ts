@@ -2,7 +2,7 @@
  * @Author: Armito 1656318310@qq.com
  * @Date: 2022-06-16 21:41:55
  * @LastEditors: Armito 1656318310@qq.com
- * @LastEditTime: 2022-06-16 23:32:50
+ * @LastEditTime: 2022-06-18 12:34:12
  * @FilePath: \iAccount\electron-main\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -14,8 +14,13 @@ const createWindow = () => {
         webPreferences: {
             contextIsolation: false, // 是否开启隔离上下文
             nodeIntegration: true, // 渲染进程使用Node API
-            preload: path.join(__dirname, '../electron-preload/index.js'), // 需要引用js文件
+            // preload: path.join(__dirname, '../electron-preload/index.js'), // 需要引用js文件
         },
+        show: false,
+    })
+
+    win.once('ready-to-show', () => {
+        win.show()
     })
 
     // 如果打包了，渲染index.html
