@@ -2,12 +2,12 @@
  * @Author: Armito 1656318310@qq.com
  * @Date: 2022-06-16 21:41:55
  * @LastEditors: Armito 1656318310@qq.com
- * @LastEditTime: 2022-06-17 22:18:45
+ * @LastEditTime: 2022-06-18 10:38:43
  * @FilePath: \iAccount\src\pages\index\List\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import {
     ElCard,
     ElButton,
@@ -22,40 +22,15 @@ import {
 } from 'element-plus'
 import { Delete, Edit } from '@element-plus/icons-vue'
 import { v4 as uuidV4 } from 'uuid'
+import { readExcel, writeExcel } from '@/utils/excel'
 
-interface Account {
-    id: string
-    appName: string
-    account: string
-    password: string
-}
+const accountList = ref<Account[]>([])
 
-const accountList = ref<Account[]>([
-    {
-        id: uuidV4(),
-        appName: 'weixin',
-        account: 'sadijdj923ij',
-        password: '943u9i43',
-    },
-    {
-        id: uuidV4(),
-        appName: 'qq',
-        account: 'sadsad',
-        password: '34556654t45',
-    },
-    {
-        id: uuidV4(),
-        appName: 'weibo',
-        account: 'plplplp3',
-        password: '9ifd09r09fj3',
-    },
-    {
-        id: uuidV4(),
-        appName: '招行',
-        account: 'rtyurtyu',
-        password: '21343214',
-    },
-])
+onMounted(() => {
+    readExcel('账号', (data) => {
+        accountList.value = data
+    })
+})
 
 const formRef = ref<FormInstance>()
 
@@ -130,6 +105,7 @@ const handleEditDialogSave = () => {
                     ...formModel.value,
                 })
             }
+            writeExcel('账号', accountList.value)
             handleEditDialogClose()
         }
     })
@@ -137,6 +113,7 @@ const handleEditDialogSave = () => {
 
 const handleDeleteAccount = (id: string) => {
     accountList.value = accountList.value.filter((account) => account.id !== id)
+    writeExcel('账号', accountList.value)
 }
 </script>
 
