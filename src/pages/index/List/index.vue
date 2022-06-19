@@ -2,7 +2,7 @@
  * @Author: Armito 1656318310@qq.com
  * @Date: 2022-06-16 21:41:55
  * @LastEditors: Armito 1656318310@qq.com
- * @LastEditTime: 2022-06-18 14:44:13
+ * @LastEditTime: 2022-06-19 12:06:26
  * @FilePath: \iAccount\src\pages\index\List\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -23,9 +23,11 @@ import {
 } from 'element-plus'
 import { Delete, Edit } from '@element-plus/icons-vue'
 import { v4 as uuidV4 } from 'uuid'
-import { readExcel, writeExcel } from '@/utils/excel'
+import { useExcel } from '@/hooks/useExcel'
 
 const accountList = ref<Account[]>([])
+
+const { readExcel, writeExcel } = useExcel()
 
 onMounted(() => {
     readExcel('账号', (data) => {
