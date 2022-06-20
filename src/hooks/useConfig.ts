@@ -8,15 +8,15 @@
  */
 import { ref } from 'vue'
 import * as fs from 'fs'
-import _config from '../../iAccount.config.json'
 
 export const useConfig = () => {
-    const config = ref<Config>(_config)
+    const config = ref<Config>({ name: '' })
 
-    const getConfig = () => {
-        return {
-            config: config.value || 'Armito Niubi',
-        }
+    try {
+        const data = fs.readFileSync('./iAccount.config.json', 'utf-8')
+        config.value = JSON.parse(data)
+    } catch (error) {
+        console.warn(error)
     }
 
     const setConfig = (newconfig: Config, callback?: () => void) => {
@@ -36,7 +36,7 @@ export const useConfig = () => {
     }
 
     return {
-        getConfig,
+        config,
         setConfig,
     }
 }

@@ -21,11 +21,9 @@ import { useConfigStore } from '@/store/useConfigStore'
 
 const ruleFormRef = ref<FormInstance>()
 
-const { getConfig, setConfig } = useConfigStore()
+const configStore = useConfigStore()
 
-const { config } = getConfig()
-
-const ruleForm = reactive<Config>(config)
+const ruleForm = reactive<Config>({ ...configStore.config })
 
 const formSize = ref<'default' | 'small' | 'large'>('default')
 
@@ -54,7 +52,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     await formEl.validate((valid, fields) => {
         if (valid) {
-            setConfig(ruleForm)
+            configStore.setConfig(ruleForm)
         } else {
             console.log('error submit!', fields)
         }

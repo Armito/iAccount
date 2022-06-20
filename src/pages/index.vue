@@ -19,10 +19,7 @@ import {
 import { Document, Menu as IconMenu, Setting } from '@element-plus/icons-vue'
 import { useConfigStore } from '@/store/useConfigStore'
 
-const { getConfig } = useConfigStore()
-const {
-    config: { name },
-} = getConfig()
+const configStore = useConfigStore()
 
 const router = useRouter()
 const handleSelect = (key: string) => {
@@ -38,7 +35,7 @@ const handleSelect = (key: string) => {
                 class="el-menu-vertical-demo"
                 @select="handleSelect"
             >
-                <div class="name-box">{{ name }}</div>
+                <div class="name-box">{{ configStore.config.name }}</div>
 
                 <el-menu-item index="/list">
                     <el-icon><document /></el-icon>
