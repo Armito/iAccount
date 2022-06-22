@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ElButton, ElMessage } from 'element-plus'
+import { ElButton, ElNotification } from 'element-plus'
 import { DocumentCopy } from '@element-plus/icons-vue'
 
 withDefaults(
@@ -12,9 +12,11 @@ withDefaults(
 )
 
 const onSuccess = () => {
-    ElMessage({
-        message: '复制成功！',
+    ElNotification({
+        message: 'Copy success!',
         type: 'success',
+        duration: 1000,
+        position: 'bottom-left',
     })
 }
 </script>

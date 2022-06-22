@@ -8,3 +8,5 @@ interface Account {
     account: string
     password: string
 }
+
+type FormModel = Partial<Account>
