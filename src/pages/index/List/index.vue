@@ -7,7 +7,7 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import {
     ElCard,
     ElButton,
@@ -22,6 +22,7 @@ import {
     ElEmpty,
 } from 'element-plus'
 import { Delete, Edit } from '@element-plus/icons-vue'
+import CopyButton from '@/components/CopyButton/index.vue'
 import { v4 as uuidV4 } from 'uuid'
 import { useExcel } from '@/hooks/useExcel'
 
@@ -29,10 +30,8 @@ const accountList = ref<Account[]>([])
 
 const { readExcel, writeExcel } = useExcel()
 
-onMounted(() => {
-    readExcel('账号', (data) => {
-        accountList.value = data
-    })
+readExcel('账号', (data) => {
+    accountList.value = data
 })
 
 const formRef = ref<FormInstance>()
@@ -160,9 +159,11 @@ const handleDeleteAccount = (id: string) => {
                 <el-descriptions :column="2">
                     <el-descriptions-item label="账号">
                         {{ item.account }}
+                        <CopyButton :text="item.account" />
                     </el-descriptions-item>
                     <el-descriptions-item label="密码">
                         {{ Array(item.password.length).fill('*').join('') }}
+                        <CopyButton :text="item.password" />
                     </el-descriptions-item>
                 </el-descriptions>
             </div>
