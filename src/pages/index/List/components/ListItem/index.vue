@@ -11,61 +11,71 @@ defineProps<{
 </script>
 
 <template>
-    <el-card>
-        <template #header>
-            <div class="card-header">
-                <span class="card-header-text">
-                    {{ `『${item.appName}』` }}
-                </span>
-                <div>
-                    <el-button
-                        type="primary"
-                        :icon="Edit"
-                        size="small"
-                        @click="() => editItem(item)"
-                    />
-                    <el-popconfirm
-                        title="Are you sure to delete this?"
-                        @confirm="() => deleteItem(item.id)"
-                    >
-                        <template #reference>
-                            <el-button
-                                type="danger"
-                                :icon="Delete"
-                                size="small"
-                            />
-                        </template>
-                    </el-popconfirm>
+    <div class="card-box">
+        <el-card shadow="hover">
+            <template #header>
+                <div class="card-header">
+                    <span class="card-header-text">
+                        {{ `『${item.appName}』` }}
+                    </span>
+                    <div>
+                        <el-button
+                            type="primary"
+                            :icon="Edit"
+                            size="small"
+                            @click="() => editItem(item)"
+                        />
+                        <el-popconfirm
+                            title="Are you sure to delete this?"
+                            @confirm="() => deleteItem(item.id)"
+                        >
+                            <template #reference>
+                                <el-button
+                                    type="danger"
+                                    :icon="Delete"
+                                    size="small"
+                                />
+                            </template>
+                        </el-popconfirm>
+                    </div>
                 </div>
-            </div>
-        </template>
+            </template>
 
-        <div class="text item">
-            <el-row>
-                <el-col :span="12">
-                    <el-row>
-                        <el-col :span="4">账号</el-col>
-                        <el-col :span="20">
-                            {{ item.account }}
-                            <CopyButton :text="item.account" />
-                        </el-col>
-                    </el-row>
-                </el-col>
-                <el-col :span="12">
-                    <el-row>
-                        <el-col :span="4">密码</el-col>
-                        <el-col :span="20">
-                            {{ Array(item.password.length).fill('*').join('') }}
-                            <CopyButton :text="item.password" />
-                        </el-col>
-                    </el-row>
-                </el-col>
-            </el-row>
-        </div>
-    </el-card>
+            <div class="text item">
+                <el-row>
+                    <el-col :span="12">
+                        <el-row>
+                            <el-col :span="4">账号</el-col>
+                            <el-col :span="20">
+                                {{ item.account }}
+                                <CopyButton :text="item.account" />
+                            </el-col>
+                        </el-row>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-row>
+                            <el-col :span="4">密码</el-col>
+                            <el-col :span="20">
+                                {{
+                                    Array(item.password.length)
+                                        .fill('*')
+                                        .join('')
+                                }}
+                                <CopyButton :text="item.password" />
+                            </el-col>
+                        </el-row>
+                    </el-col>
+                </el-row>
+            </div>
+        </el-card>
+    </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+.card-box {
+    padding: 0 10px;
+}
+
 .el-card {
     margin-bottom: 10px;
 

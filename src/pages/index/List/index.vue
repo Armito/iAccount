@@ -98,13 +98,14 @@ const handleDelete = (id: string) => {
     />
 </template>
 
-<style lang="less" scoped>
-@import '@/styles/common';
+<style lang="scss" scoped>
+@use '@/styles/common.scss' as *;
+
 .list-box {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    .no-scrollbar();
+    @include no-scrollbar;
 }
 .list-box-add {
     margin-bottom: 10px;

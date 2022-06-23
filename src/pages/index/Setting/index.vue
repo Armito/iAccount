@@ -36,8 +36,8 @@ const rules = reactive<FormRules>({
         },
         {
             min: 3,
-            max: 16,
-            message: 'Length should be 3 to 16',
+            max: 9,
+            message: 'Length should be 3 to 9',
             trigger: 'blur',
         },
     ],
@@ -61,7 +61,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 </script>
 
 <template>
-    <el-card>
+    <el-card shadow="hover">
         <el-form
             ref="ruleFormRef"
             :model="ruleForm"

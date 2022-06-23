@@ -16,7 +16,13 @@ import {
     ElMenuItem,
     ElIcon,
 } from 'element-plus'
-import { Document, Menu as IconMenu, Setting } from '@element-plus/icons-vue'
+import {
+    Document,
+    Apple,
+    Setting,
+    Reading,
+    Timer,
+} from '@element-plus/icons-vue'
 import { useConfigStore } from '@/store/useConfigStore'
 
 const configStore = useConfigStore()
@@ -29,7 +35,7 @@ const handleSelect = (key: string) => {
 
 <template>
     <el-container>
-        <el-aside width="200px">
+        <el-aside width="160px">
             <el-menu
                 default-active="/list"
                 class="el-menu-vertical-demo"
@@ -42,8 +48,16 @@ const handleSelect = (key: string) => {
                     <span>我的账号</span>
                 </el-menu-item>
                 <el-menu-item index="/detail">
-                    <el-icon><icon-menu /></el-icon>
+                    <el-icon><Apple /></el-icon>
                     <span>我的应用</span>
+                </el-menu-item>
+                <el-menu-item index="/read">
+                    <el-icon><Reading /></el-icon>
+                    <span>我的书架</span>
+                </el-menu-item>
+                <el-menu-item index="/plan">
+                    <el-icon><Timer /></el-icon>
+                    <span>我的计划</span>
                 </el-menu-item>
                 <el-menu-item index="/setting">
                     <el-icon><Setting /></el-icon>
@@ -57,11 +71,15 @@ const handleSelect = (key: string) => {
     </el-container>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .el-container,
 .el-aside,
 .el-main {
     height: 100%;
+}
+
+.el-main {
+    padding: 10px;
 }
 
 .name-box {

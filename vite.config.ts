@@ -14,10 +14,19 @@ export default defineConfig({
             '@': path.resolve(__dirname, 'src'),
         },
     },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: `@use "@/styles/element.scss" as *;`,
+            },
+        },
+    },
     plugins: [
         vue(),
         Pages(),
-        ElementPlus(),
+        ElementPlus({
+            useSource: true,
+        }),
         electron({
             main: {
                 entry: 'electron-main/index.ts',
