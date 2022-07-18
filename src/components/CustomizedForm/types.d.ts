@@ -11,8 +11,6 @@ export interface CustomizedField {
     type: CustomizedFieldType
     key: string
     value?: any
-    label: string
-    formItemProps?: any
-    dataItemProps?: any
-    options?: Option[]
+    formItemProps: { label: string; path: string; [key: string]: any }
+    dataItemProps?: { options?: Option[]; [key: string]: any }
 }

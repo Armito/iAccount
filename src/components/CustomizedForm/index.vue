@@ -7,7 +7,7 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script lang="ts" setup>
-import { reactive, watch } from 'vue'
+import { reactive, watch, useSlots } from 'vue'
 import { NForm, NFormItem } from 'naive-ui'
 import {
     NInput,
@@ -18,8 +18,9 @@ import {
     NIcon,
 } from 'naive-ui'
 import { FormProps } from 'naive-ui'
-import { GameControllerOutline } from '@vicons/ionicons5'
-import { CustomizedField } from './types'
+import { DatePickerType } from 'naive-ui/es/date-picker/src/config'
+import { AFormItemRadio } from '@/components/AComponents'
+import { CustomizedField, CustomizedFieldType } from './types'
 
 // props
 interface CustomizedFormProps {
@@ -47,6 +48,14 @@ watch(model, () => {
     emits('change', model)
 })
 
+// slots
+const slots = useSlots()
+
+// tools
+const typeTransform = (type: CustomizedFieldType) => {
+    return type.toLowerCase() as DatePickerType
+}
+
 // expose
 defineExpose({ model })
 </script>
@@ -54,58 +63,22 @@ defineExpose({ model })
 <template>
     <n-form ref="formRef" :model="model" v-bind="props.formProps">
         <template v-for="field in props.fields" :key="field.id">
-            <n-form-item
-                v-if="field.type === 'Text'"
-                v-bind="field.formItemProps"
-                :path="field.key"
-                :label="field.label"
-            >
-                <n-input
-                    v-model:value="model[field.key]"
-                    v-bind="field.dataItemProps"
-                />
-            </n-form-item>
-
-            <n-form-item
+            <AFormItemRadio
                 v-if="field.type === 'Radio'"
-                v-bind="field.formItemProps"
-                :path="field.key"
-                :label="field.label"
+                v-model:value="model[field.key]"
+                v-bind="field"
             >
-                <n-radio-group
-                    v-model:value="model[field.key]"
-                    v-bind="field.dataItemProps"
-                >
-                    <n-space>
-                        <n-radio
-                            v-for="option in field.options"
-                            :key="option.value"
-                            v-bind="option"
-                        />
-                    </n-space>
-                </n-radio-group>
-            </n-form-item>
-
-            <n-form-item
-                v-if="field.type === 'Date' || field.type === 'Datetime'"
-                v-bind="field.formItemProps"
-                :path="field.key"
-                :label="field.label"
-            >
-                <template #label>
-                    <n-icon size="16">
-                        <game-controller-outline />
-                    </n-icon>
-                    Game
+                <template #formItemLabel="formItemProps">
+                    <slot name="formItemLabel" v-bind="formItemProps"></slot>
+                    <slot
+                        v-if="!slots.formItemLabel"
+                        name="formItemRadioLabel"
+                        v-bind="formItemProps"
+                    >
+                        {{ formItemProps.label }}
+                    </slot>
                 </template>
-                <template #default>
-                    <n-date-picker
-                        v-model:value="model[field.key]"
-                        v-bind="field.dataItemProps"
-                        :type="field.type.toLowerCase()"
-                    />
-                </template>
-            </n-form-item>
+            </AFormItemRadio>
         </template>
     </n-form>
 </template>
