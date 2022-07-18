@@ -1,3 +1,11 @@
+<!--
+ * @Author: Armito 1656318310@qq.com
+ * @Date: 2022-07-18 20:08:21
+ * @LastEditors: Armito 1656318310@qq.com
+ * @LastEditTime: 2022-07-18 22:27:23
+ * @FilePath: \iAccount\src\components\AComponents\ARadio\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <script lang="ts">
 export default {
     name: 'ARadio',
@@ -30,10 +38,10 @@ const attrs = useAttrs()
         <NSpace>
             <NRadio
                 v-for="option in props.options"
-                :key="option.value"
                 v-bind="option"
+                :key="option.value"
             >
-                <slot name="label" v-bind="option">
+                <slot v-bind="option" name="label">
                     {{ option.label }}
                 </slot>
             </NRadio>

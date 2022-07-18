@@ -2,27 +2,33 @@
  * @Author: Armito 1656318310@qq.com
  * @Date: 2022-07-18 20:08:21
  * @LastEditors: Armito 1656318310@qq.com
- * @LastEditTime: 2022-07-18 22:27:41
+ * @LastEditTime: 2022-07-18 22:07:41
  * @FilePath: \iAccount\src\components\AComponents\AFormItemRadio\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script lang="ts">
 export default {
-    name: 'AFormItemRadio',
+    name: 'AFormItemDatePicker',
     inheritAttrs: false,
 }
 </script>
 
 <script lang="ts" setup>
 import { useAttrs } from 'vue'
-import { NFormItem, FormItemProps } from 'naive-ui'
-import ARadio, { ARadioProps } from '../ARadio/index.vue'
+import {
+    NFormItem,
+    FormItemProps,
+    NDatePicker,
+    DatePickerProps,
+    NIcon,
+} from 'naive-ui'
+import { DateIcon, ToIcon } from 'naive-ui/es/_internal/icons'
 
 // props
 interface AFormItemRadioProps {
     value: any
     formItemProps?: FormItemProps
-    dataItemProps?: ARadioProps
+    dataItemProps?: DatePickerProps
 }
 const props = defineProps<AFormItemRadioProps>()
 
@@ -44,27 +50,33 @@ const onUpdateValue = (value: any) => {
 <template>
     <NFormItem v-bind="{ ...props.formItemProps, ...attrs }">
         <template #label>
-            <slot v-bind="props.formItemProps" name="formItemLabel">
+            <slot name="formItemLabel" v-bind="props.formItemProps">
                 {{ props.formItemProps?.label }}
             </slot>
         </template>
 
         <template #default>
-            <ARadio
+            <NDatePicker
                 v-bind="props.dataItemProps"
                 :value="props.value"
                 @update:value="onUpdateValue"
             >
-                <template #label="option">
-                    <slot v-bind="option" name="dataItemLabel">
-                        {{ option.label }}
+                <template #separator>
+                    <slot name="separator">
+                        <NIcon :component="ToIcon" size="16" />
                     </slot>
                 </template>
-            </ARadio>
+
+                <template #date-icon>
+                    <slot name="date-icon">
+                        <NIcon :component="DateIcon" size="16" />
+                    </slot>
+                </template>
+            </NDatePicker>
         </template>
 
         <template #feedback>
-            <slot v-bind="props.formItemProps" name="feedback">
+            <slot name="feedback" v-bind="props.formItemProps">
                 {{ props.formItemProps?.feedback }}
             </slot>
         </template>
