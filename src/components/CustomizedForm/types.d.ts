@@ -1,6 +1,4 @@
-import { DatePickerType } from 'naive-ui/es/date-picker/src/config'
-
-export type CustomizedFieldType = 'Text' | 'Radio' | 'Date' | 'Datetime'
+import { AFormDataItemProps } from '@/components/AComponents/AFormDataItem/index.vue'
 
 export interface Option {
     value: any
@@ -10,7 +8,7 @@ export interface Option {
 
 export interface CustomizedField {
     id: string | number
-    type: CustomizedFieldType
+    type: Pickout<AFormDataItemProps, 'type'>
     key: string
     value?: any
     formItemProps: {
@@ -22,7 +20,6 @@ export interface CustomizedField {
     dataItemProps?: {
         disabled?: boolean
         options?: Option[]
-        type?: DatePickerType
         [key: string]: any
     }
 }

@@ -9,22 +9,23 @@ import moment from 'moment'
 const formRef = ref()
 
 const fields = ref<CustomizedField[]>([
-    // {
-    //     id: uuid(),
-    //     key: 'name',
-    //     label: 'NICKNAME',
-    //     type: 'Text',
-    //     value: 'Atmito',
-    //     formItemProps: {
-    //         required: true,
-    //     },
-    //     dataItemProps: {
-    //         clearable: true,
-    //     },
-    // },
     {
         id: uuid(),
-        type: 'Radio',
+        type: 'text',
+        key: 'name',
+        value: 'Atmito',
+        formItemProps: {
+            required: true,
+            label: 'NICKNAME',
+            path: 'name',
+        },
+        dataItemProps: {
+            clearable: true,
+        },
+    },
+    {
+        id: uuid(),
+        type: 'radio',
         key: 'gender',
         value: 2,
         formItemProps: {
@@ -53,7 +54,7 @@ const fields = ref<CustomizedField[]>([
     },
     {
         id: uuid(),
-        type: 'Date',
+        type: 'date',
         key: 'dateTime',
         value: moment().valueOf(),
         formItemProps: {
@@ -69,7 +70,7 @@ const fields = ref<CustomizedField[]>([
     {
         id: uuid(),
         key: 'endTime',
-        type: 'Datetime',
+        type: 'datetimerange',
         formItemProps: {
             path: 'endTime',
             required: true,
