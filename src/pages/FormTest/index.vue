@@ -14,11 +14,9 @@ const fields = ref<CustomizedField[]>([
         type: 'text',
         key: 'name',
         value: 'Atmito',
-        formItemProps: {
-            required: true,
-            label: 'NICKNAME',
-            path: 'name',
-        },
+        required: true,
+        label: 'NICKNAME',
+        path: 'name',
         dataItemProps: {
             clearable: true,
         },
@@ -28,11 +26,9 @@ const fields = ref<CustomizedField[]>([
         type: 'radio',
         key: 'gender',
         value: 2,
-        formItemProps: {
-            label: 'GENDER',
-            path: 'gender',
-            required: true,
-        },
+        label: 'GENDER',
+        path: 'gender',
+        required: true,
         dataItemProps: {
             size: 'large',
             options: [
@@ -57,11 +53,9 @@ const fields = ref<CustomizedField[]>([
         type: 'date',
         key: 'dateTime',
         value: moment().valueOf(),
-        formItemProps: {
-            path: 'dateTime',
-            required: true,
-            label: 'DATETIME',
-        },
+        path: 'dateTime',
+        required: true,
+        label: 'DATETIME',
         dataItemProps: {
             type: 'date',
             clearable: true,
@@ -71,11 +65,9 @@ const fields = ref<CustomizedField[]>([
         id: uuid(),
         key: 'endTime',
         type: 'datetimerange',
-        formItemProps: {
-            path: 'endTime',
-            required: true,
-            label: 'ENDTIME',
-        },
+        path: 'endTime',
+        required: true,
+        label: 'ENDTIME',
         dataItemProps: {
             clearable: true,
             type: 'datetimerange',

@@ -11,12 +11,9 @@ export interface CustomizedField {
     type: Pickout<AFormDataItemProps, 'type'>
     key: string
     value?: any
-    formItemProps: {
-        label: string
-        path: string
-        required?: boolean
-        [key: string]: any
-    }
+    label: string
+    path: string
+    required?: boolean
     dataItemProps?: {
         disabled?: boolean
         options?: Option[]

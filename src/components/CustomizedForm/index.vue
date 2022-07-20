@@ -7,7 +7,7 @@ export default {
 
 <script lang="ts" setup>
 import { reactive, watch, useAttrs } from 'vue'
-import { NForm, FormProps } from 'naive-ui'
+import { NForm, FormProps, NInputNumber } from 'naive-ui'
 import { AFormDataItem } from '@/components/AComponents'
 import { CustomizedField } from './types'
 
@@ -35,7 +35,7 @@ const initialModel = props.fields.reduce(
     }),
     {},
 )
-const model = reactive<Record<string, any>>(initialModel)
+const model = reactive<Record<string, any>>({ ...initialModel, age: 18 })
 watch(model, () => {
     emits('change', model)
 })
@@ -55,8 +55,16 @@ defineExpose({ model })
             v-bind="field"
             :key="field.id"
             v-model:value="model[field.key]"
-            :type="field.type"
         />
+
+        <AFormDataItem
+            type="custom"
+            path="endTime"
+            :required="true"
+            label="ENDTIME"
+        >
+            <NInputNumber v-model:value="model.age" />
+        </AFormDataItem>
     </n-form>
 </template>
 

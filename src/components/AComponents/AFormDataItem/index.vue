@@ -15,15 +15,15 @@ import { DatePickerType } from 'naive-ui/es/date-picker/src/config'
 
 // props
 export type ItemType =
+    | 'custom'
     | 'text'
     | 'textarea'
     | 'password'
     | 'radio'
     | DatePickerType
-export interface AFormDataItemProps {
-    value: any
+export interface AFormDataItemProps extends FormItemProps {
     type: ItemType
-    formItemProps?: FormItemProps
+    value?: any
     dataItemProps?: Record<string, unknown>
 }
 const props = defineProps<AFormDataItemProps>()
@@ -44,14 +44,20 @@ const onUpdateValue = (value: any) => {
 </script>
 
 <template>
-    <NFormItem v-bind="{ ...attrs, ...props.formItemProps }">
+    <NFormItem v-bind="attrs">
         <template #label>
-            <slot name="formItemLabel" v-bind="props.formItemProps">
-                {{ props.formItemProps?.label }}
+            <slot name="formItemLabel" v-bind="attrs">
+                {{ attrs?.label }}
             </slot>
         </template>
 
         <template #default>
+            <slot
+                v-if="props.type === 'custom'"
+                name="default"
+                v-bind="props.dataItemProps"
+            ></slot>
+
             <NInput
                 v-if="
                     props.type === 'text' ||
@@ -59,6 +65,7 @@ const onUpdateValue = (value: any) => {
                     props.type === 'password'
                 "
                 v-bind="props.dataItemProps"
+                :type="props.type"
                 :value="props.value"
                 @update:value="onUpdateValue"
             />
@@ -73,18 +80,26 @@ const onUpdateValue = (value: any) => {
             <NDatePicker
                 v-if="
                     props.type === 'date' ||
+                    props.type === 'daterange' ||
                     props.type === 'datetime' ||
-                    props.type === 'datetimerange'
+                    props.type === 'datetimerange' ||
+                    props.type === 'month' ||
+                    props.type === 'year' ||
+                    props.type === 'quarter' ||
+                    props.type === 'monthrange' ||
+                    props.type === 'yearrange' ||
+                    props.type === 'quarterrange'
                 "
                 v-bind="props.dataItemProps"
+                :type="props.type"
                 :value="props.value"
                 @update:value="onUpdateValue"
             />
         </template>
 
         <template #feedback>
-            <slot name="feedback" v-bind="props.formItemProps">
-                {{ props.formItemProps?.feedback }}
+            <slot name="feedback" v-bind="attrs">
+                {{ attrs?.feedback }}
             </slot>
         </template>
     </NFormItem>
