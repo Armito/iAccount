@@ -77,7 +77,7 @@ const fields = ref<CustomizedField[]>([
 
 const onFormModelChange = (model: Record<string, any>) => {
     console.log(model)
-    console.log(formRef.value.model)
+    // console.log(formRef.value.model)
 }
 </script>
 

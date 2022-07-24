@@ -10,15 +10,12 @@ import { useAttrs } from 'vue'
 import { NFormItem, FormItemProps } from 'naive-ui'
 import ARadio, { ARadioProps } from '../ARadio/index.vue'
 
-// props
-interface AFormItemRadioProps {
+// props, attrs
+export interface AFormItemRadioProps extends FormItemProps {
     value: any
-    formItemProps?: FormItemProps
     dataItemProps?: ARadioProps
 }
 const props = defineProps<AFormItemRadioProps>()
-
-// attrs
 const attrs = useAttrs()
 
 // emits
@@ -34,10 +31,10 @@ const onUpdateValue = (value: any) => {
 </script>
 
 <template>
-    <NFormItem v-bind="{ ...attrs, ...props.formItemProps }">
+    <NFormItem v-bind="attrs">
         <template #label>
-            <slot v-bind="props.formItemProps" name="formItemLabel">
-                {{ props.formItemProps?.label }}
+            <slot v-bind="attrs" name="formItemLabel">
+                {{ attrs?.label }}
             </slot>
         </template>
 
@@ -56,8 +53,8 @@ const onUpdateValue = (value: any) => {
         </template>
 
         <template #feedback>
-            <slot v-bind="props.formItemProps" name="feedback">
-                {{ props.formItemProps?.feedback }}
+            <slot v-bind="attrs" name="formItemFeedback">
+                {{ attrs?.feedback }}
             </slot>
         </template>
     </NFormItem>
