@@ -11,4 +11,4 @@ import { NDataTable } from 'naive-ui'
 
 <template></template>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>

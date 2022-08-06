@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { NButton, NSpace } from 'naive-ui'
 import { GameControllerOutline } from '@vicons/ionicons5'
 import CustomizedForm from '@/components/CustomizedForm/index.vue'
 import { CustomizedField } from '@/components/CustomizedForm/types'
@@ -92,6 +93,16 @@ const onFormModelChange = (model: Record<string, any>) => {
         :fields="fields"
         @change="onFormModelChange"
     />
+
+    <n-space>
+        <n-button>Default</n-button>
+        <n-button type="tertiary"> Tertiary </n-button>
+        <n-button type="primary"> Primary </n-button>
+        <n-button type="info"> Info </n-button>
+        <n-button type="success"> Success </n-button>
+        <n-button type="warning"> Warning </n-button>
+        <n-button type="error"> Error </n-button>
+    </n-space>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>
