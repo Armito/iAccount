@@ -1,19 +1,26 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
-import { DataTableColumns } from 'naive-ui'
-import SearchTable from '@/components/AComponents/ASearchTable/index.vue'
-import { sleep } from '@/utils/tools'
+import { ref } from 'vue'
+import SearchTable, {
+    SearchTableProps,
+} from '@/components/AComponents/ASearchTable/index.vue'
 
-const columns: DataTableColumns<any> = [
+const columns: Pickout<SearchTableProps, 'columns'> = [
     {
-        title: 'column1',
-        key: 'column1',
+        title: 'name',
+        key: 'name',
+        dataIndex: 'name',
+        value: 'armito',
         sorter: true,
         sortOrder: false,
+        formItemProps: {
+            type: 'text',
+            label: 'name',
+        },
     },
     {
-        title: 'column2',
-        key: 'column2',
+        title: 'age',
+        key: 'age',
+        dataIndex: 'age',
         filter: true,
         filterOptionValues: [],
         filterOptions: [
@@ -26,62 +33,69 @@ const columns: DataTableColumns<any> = [
                 value: 2,
             },
         ],
+        formItemProps: {
+            type: 'password',
+            label: 'age',
+        },
     },
     {
-        title: 'Column3',
-        key: 'column3',
+        title: 'addr',
+        dataIndex: 'addr',
+        key: 'addr',
+        formItemProps: {
+            type: 'text',
+            label: 'addr',
+        },
     },
 ]
 
-const data = Array(978).map((_, index) => {
-    return {
-        column1: index,
-        column2: (index % 2) + 1,
-        column3: 'a' + index,
-    }
-})
+const data = Array(978)
+    .fill('a')
+    .map((_, index) => {
+        return {
+            name: index,
+            age: (index % 2) + 1,
+            addr: 'a' + index,
+        }
+    })
 
-// const handleSorterChange = () => {}
-// const handleFiltersChange = () => {}
-// const handlePageChange = () => {}
-
-const pagination = reactive({
+const pagination = ref<Pickout<SearchTableProps, 'pagination'>>({
     page: 1,
-    pageCount: 1,
     pageSize: 10,
-    prefix({ itemCount }: { itemCount: number | undefined }) {
-        return `Total is ${itemCount}.`
-    },
+    pageSizes: [10, 20, 50, 100],
+    showSizePicker: true,
+    prefix: ({ itemCount }) => `Total is ${itemCount}.`,
 })
 
-const request = () => {
-    sleep(2000)
-    return Promise.resolve({
-        data: data.splice(0, 10),
-        total: data.length,
+const request: Pickout<SearchTableProps, 'request'> = (params) => {
+    console.log(params)
+    const { page } = params
+
+    return new Promise((resolve) => {
+        console.log(page)
+        setTimeout(() => {
+            resolve({
+                data: data.slice(10 * page, 10 * (page + 1)),
+                total: data.length,
+            })
+        }, 1000)
     })
 }
 
-const dataRef = ref([])
-
-// @update:sorter="handleSorterChange"
-//             @update:filters="handleFiltersChange"
-//             @update:page="handlePageChange"
+const table = ref()
 </script>
 
 <template>
-    <Suspense>
-        <SearchTable
-            ref="table"
-            remote
-            :columns="columns"
-            :pagination="pagination"
-            :request="request"
-        />
-        <template #fallback
-            >loadingloadingloadingloadingloadingloadingloadingloading</template
-        >
-    </Suspense>
+    <SearchTable
+        ref="table"
+        :columns="columns"
+        :form-props="{
+            inline: true,
+            labelPlacement: 'left',
+        }"
+        :pagination="pagination"
+        :request="request"
+    />
 </template>
 
 <style lang="less" scoped></style>

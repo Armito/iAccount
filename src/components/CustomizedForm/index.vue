@@ -7,7 +7,7 @@ export default {
 
 <script lang="ts" setup>
 import { reactive, watch, useAttrs } from 'vue'
-import { NForm, FormProps, NInputNumber } from 'naive-ui'
+import { NForm, FormProps, NInputNumber, NFormItem, NButton } from 'naive-ui'
 import { AFormDataItem } from '@/components/AComponents'
 import { CustomizedField } from './types'
 
@@ -40,6 +40,12 @@ watch(model, () => {
     emits('change', model)
 })
 
+const onReset = () => {
+    for (const key in model) {
+        model[key] = undefined
+    }
+}
+
 // expose
 defineExpose({ model })
 </script>
@@ -65,6 +71,10 @@ defineExpose({ model })
         >
             <NInputNumber v-model:value="model.age" />
         </AFormDataItem>
+
+        <n-form-item>
+            <n-button attr-type="reset" @click="onReset"> 重置 </n-button>
+        </n-form-item>
     </n-form>
 </template>
 
