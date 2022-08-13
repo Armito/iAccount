@@ -1,19 +1,18 @@
-<script lang="ts">
 import { ref } from 'vue'
 import { DataTableProps } from 'naive-ui'
-import { SearchTableProps } from '../index.vue'
-import { usePagination } from './usePagination.vue'
-import { useSearch } from './useSearch.vue'
-import { useRequest } from './useRequest.vue'
+import { SearchTableProps } from '../types'
+import { useSearch } from './useSearch'
+import { usePagination } from './usePagination'
+import { useRequest } from './useRequest'
 
 type UseASearchTableProps = Pick<
     SearchTableProps,
     'loading' | 'columns' | 'pagination' | 'request' | 'manual'
 >
 
-export const useASearchTable = (props: UseASearchTableProps) => {
-    const { pagination } = usePagination(props.pagination)
+export const useSearchTable = (props: UseASearchTableProps) => {
     const { formRef, model, clearModel } = useSearch(props.columns)
+    const { pagination } = usePagination(props.pagination)
     const { loading, request } = useRequest(props.request)
 
     const data = ref<any[]>([])
@@ -70,4 +69,3 @@ export const useASearchTable = (props: UseASearchTableProps) => {
         onUpdatePageSize,
     }
 }
-</script>

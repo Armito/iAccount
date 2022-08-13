@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import SearchTable, {
-    SearchTableProps,
-} from '@/components/AComponents/ASearchTable/index.vue'
+import SearchTable from '@/components/AComponents/SearchTable/index.vue'
+import { SearchTableProps } from '@/components/AComponents/SearchTable/types'
 
 const columns: Pickout<SearchTableProps, 'columns'> = [
     {

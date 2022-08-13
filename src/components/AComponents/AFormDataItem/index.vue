@@ -11,25 +11,21 @@ import { NFormItem, FormItemProps } from 'naive-ui'
 import { NInput } from 'naive-ui'
 import ARadio from '../ARadio/index.vue'
 import { NDatePicker } from 'naive-ui'
-import { DatePickerType } from 'naive-ui/es/date-picker/src/config'
-
-// props
-export type ItemType =
-    | 'custom'
-    | 'text'
-    | 'textarea'
-    | 'password'
-    | 'radio'
-    | DatePickerType
-export interface AFormDataItemProps extends FormItemProps {
-    type: ItemType
-    value?: any
-    dataItemProps?: Record<string, unknown>
-}
-const props = defineProps<AFormDataItemProps>()
+import {
+    AFormDataItemProps_type,
+    AFormDataItemProps_value,
+    AFormDataItemProps_dataItemProps,
+} from './types'
 
 // attrs
 const attrs = useAttrs()
+
+interface AFormDataItemProps extends FormItemProps {
+    type: AFormDataItemProps_type
+    value?: AFormDataItemProps_value
+    dataItemProps?: AFormDataItemProps_dataItemProps
+}
+const props = defineProps<AFormDataItemProps>()
 
 // emits
 interface AFormItemRadioEmits {

@@ -1,6 +1,5 @@
-<script lang="ts">
 import { reactive } from 'vue'
-import { SearchTableProps } from '../index.vue'
+import { SearchTableProps } from '../types'
 
 export const usePagination = (
     initialPagination: Pickout<SearchTableProps, 'pagination'>,
@@ -14,4 +13,3 @@ export const usePagination = (
         }),
     }
 }
-</script>

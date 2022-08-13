@@ -1,6 +1,5 @@
-<script lang="ts">
 import { ref } from 'vue'
-import { SearchTableProps } from '../index.vue'
+import { SearchTableProps } from '../types'
 
 export const useRequest = (_request: Pickout<SearchTableProps, 'request'>) => {
     const loading = ref(false)
@@ -24,4 +23,3 @@ export const useRequest = (_request: Pickout<SearchTableProps, 'request'>) => {
         request,
     }
 }
-</script>

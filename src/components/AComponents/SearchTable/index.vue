@@ -11,36 +11,37 @@ import {
     NDataTable,
     DataTableProps,
     NForm,
-    FormProps,
     NFormItem,
     NSpace,
     NButton,
 } from 'naive-ui'
 import AFormDataItem from '../AFormDataItem/index.vue'
-import { useASearchTable } from './hooks/index.vue'
-import { Column, Pagination, RequestFn } from './types.vue'
-
-export interface SearchTableProps
-    extends Omit<DataTableProps, 'loading' | 'data' | 'remote' | 'columns'> {
-    /** 搜索表单的form属性 */
-    formProps?: FormProps
-    /** 接管columns */
-    columns: Column[]
-    /** 外部loading */
-    loading?: boolean
-    /** 数据请求 */
-    request: RequestFn
-    /** 是否关闭首次请求 */
-    manual?: boolean
-    /** 接管pagination */
-    pagination?: Pagination
-}
-export interface SearchTableEmits {
-    (event: 'update:value', payload: any): void
-}
+import {
+    SearchTableProps_formProps,
+    SearchTableProps_column,
+    SearchTableProps_loading,
+    SearchTableProps_request,
+    SearchTableProps_manual,
+    SearchTableProps_pagination,
+} from './types'
+import { useSearchTable } from './hooks'
 
 const attrs = useAttrs()
+
+interface SearchTableProps
+    extends Omit<DataTableProps, 'loading' | 'data' | 'remote' | 'columns'> {
+    formProps?: SearchTableProps_formProps
+    columns: SearchTableProps_column[]
+    loading?: SearchTableProps_loading
+    request: SearchTableProps_request
+    manual?: SearchTableProps_manual
+    pagination?: SearchTableProps_pagination
+}
 const props = defineProps<SearchTableProps>()
+
+interface SearchTableEmits {
+    (event: 'update:value', payload: any): void
+}
 const emits = defineEmits<SearchTableEmits>()
 
 const {
@@ -53,7 +54,7 @@ const {
     pagination,
     onUpdatePage,
     onUpdatePageSize,
-} = useASearchTable(props)
+} = useSearchTable(props)
 </script>
 
 <template>
