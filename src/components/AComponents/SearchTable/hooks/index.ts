@@ -5,12 +5,12 @@ import { useSearch } from './useSearch'
 import { usePagination } from './usePagination'
 import { useRequest } from './useRequest'
 
-type UseASearchTableProps = Pick<
+type UseSearchTableProps = Pick<
     SearchTableProps,
     'loading' | 'columns' | 'pagination' | 'request' | 'manual'
 >
 
-export const useSearchTable = (props: UseASearchTableProps) => {
+export const useSearchTable = (props: UseSearchTableProps) => {
     const { formRef, model, clearModel } = useSearch(props.columns)
     const { pagination } = usePagination(props.pagination)
     const { loading, request } = useRequest(props.request)
