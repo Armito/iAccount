@@ -72,7 +72,6 @@ const request: Pickout<SearchTableProps, 'request'> = (params) => {
     const { page } = params
 
     return new Promise((resolve) => {
-        console.log(page)
         setTimeout(() => {
             resolve({
                 data: data.slice(10 * page, 10 * (page + 1)),
@@ -95,6 +94,7 @@ const table = ref()
         }"
         :pagination="pagination"
         :request="request"
+        :manual="true"
     />
 </template>
 

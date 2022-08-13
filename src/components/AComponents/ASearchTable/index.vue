@@ -6,55 +6,41 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { useAttrs, reactive } from 'vue'
+import { useAttrs } from 'vue'
 import {
     NDataTable,
     DataTableProps,
-    DataTableColumn,
     NForm,
     FormProps,
     NFormItem,
     NSpace,
     NButton,
 } from 'naive-ui'
-import AFormDataItem, { AFormDataItemProps } from '../AFormDataItem/index.vue'
-import { useASearchTable } from './hooks'
-
-export type Column<T = { [key: string]: unknown }> = DataTableColumn<T> & {
-    dataIndex: string
-    search?: boolean
-    formItemProps: AFormDataItemProps
-    value?: any
-}
-export type Pagination = Pickout<DataTableProps, 'pagination'>
-export type Request = (
-    params: { page: number; pageSize: number } & {
-        [key: string]: unknown
-    },
-) => Promise<{ data: any[]; total: number }>
+import AFormDataItem from '../AFormDataItem/index.vue'
+import { useASearchTable } from './hooks/index.vue'
+import { Column, Pagination, RequestFn } from './types.vue'
 
 export interface SearchTableProps
     extends Omit<DataTableProps, 'loading' | 'data' | 'remote' | 'columns'> {
-    /** 接管columns */
-    columns: Column[]
     /** 搜索表单的form属性 */
     formProps?: FormProps
+    /** 接管columns */
+    columns: Column[]
     /** 外部loading */
     loading?: boolean
+    /** 数据请求 */
+    request: RequestFn
+    /** 是否关闭首次请求 */
+    manual?: boolean
     /** 接管pagination */
     pagination?: Pagination
-    /** 数据请求 */
-    request: Request
 }
-
 export interface SearchTableEmits {
     (event: 'update:value', payload: any): void
 }
 
 const attrs = useAttrs()
-
 const props = defineProps<SearchTableProps>()
-
 const emits = defineEmits<SearchTableEmits>()
 
 const {
@@ -85,6 +71,7 @@ const {
             </n-space>
         </n-form-item>
     </n-form>
+
     <n-data-table
         v-bind="attrs"
         remote
@@ -93,7 +80,7 @@ const {
         :loading="props.loading || loading"
         :pagination="props.pagination && pagination"
         :on-update:page="onUpdatePage"
-        :on-update:pageSize="onUpdatePageSize"
+        :on-update:page-size="onUpdatePageSize"
     />
 </template>
 
