@@ -2,30 +2,25 @@
 import { ref } from 'vue'
 import { NButton, NSpace } from 'naive-ui'
 import { GameControllerOutline } from '@vicons/ionicons5'
-import CustomizedForm from '@/components/CustomizedForm/index.vue'
-import { CustomizedField } from '@/components/CustomizedForm/types'
+import CustomizedForm from '@/components/AComponents/ACustomizedForm/index.vue'
+import { ACustomizedFormProps } from '@/components/AComponents/ACustomizedForm/types'
 import { v4 as uuid } from 'uuid'
 import moment from 'moment'
 
 const formRef = ref()
 
-const fields = ref<CustomizedField[]>([
+const fields = ref<Pickout<ACustomizedFormProps, 'fields'>>([
     {
         id: uuid(),
         type: 'text',
-        key: 'name',
         value: 'Atmito',
         required: true,
         label: 'NICKNAME',
         path: 'name',
-        dataItemProps: {
-            clearable: true,
-        },
     },
     {
         id: uuid(),
         type: 'radio',
-        key: 'gender',
         value: 2,
         label: 'GENDER',
         path: 'gender',
@@ -52,46 +47,34 @@ const fields = ref<CustomizedField[]>([
     {
         id: uuid(),
         type: 'date',
-        key: 'dateTime',
         value: moment().valueOf(),
         path: 'dateTime',
         required: true,
         label: 'DATETIME',
         dataItemProps: {
-            type: 'date',
             clearable: true,
         },
     },
     {
         id: uuid(),
-        key: 'endTime',
         type: 'datetimerange',
         path: 'endTime',
         required: true,
         label: 'ENDTIME',
         dataItemProps: {
             clearable: true,
-            type: 'datetimerange',
         },
     },
 ])
-
-const onFormModelChange = (model: Record<string, any>) => {
-    console.log(model)
-    // console.log(formRef.value.model)
-}
 </script>
 
 <template>
     <CustomizedForm
         ref="formRef"
-        :form-props="{
-            labelPlacement: 'left',
-            labelAlign: 'right',
-            labelWidth: '100px',
-        }"
+        label-placement="left"
+        label-align="right"
+        label-width="100px"
         :fields="fields"
-        @change="onFormModelChange"
     />
 
     <n-space>

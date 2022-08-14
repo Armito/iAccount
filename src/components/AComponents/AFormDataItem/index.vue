@@ -8,10 +8,12 @@ export default {
 <script lang="ts" setup>
 import { useAttrs } from 'vue'
 import { NFormItem, FormItemProps } from 'naive-ui'
-import { NInput } from 'naive-ui'
+import { NInput, InputProps } from 'naive-ui'
 import ARadio from '../ARadio/index.vue'
-import { NDatePicker } from 'naive-ui'
+import { ARadioProps } from '../ARadio/types'
+import { NDatePicker, DatePickerProps } from 'naive-ui'
 import {
+    AFormDataItemTyps,
     AFormDataItemProps_type,
     AFormDataItemProps_value,
     AFormDataItemProps_dataItemProps,
@@ -20,12 +22,35 @@ import {
 // attrs
 const attrs = useAttrs()
 
-interface AFormDataItemProps extends FormItemProps {
-    type: AFormDataItemProps_type
+interface AFormDataItemProps<T extends AFormDataItemTyps>
+    extends FormItemProps {
+    /** 数据录入框类型 */
+    type: AFormDataItemProps_type<T>
+    /** 数据录入框初始值 */
     value?: AFormDataItemProps_value
-    dataItemProps?: AFormDataItemProps_dataItemProps
+    /** 数据录入框属性 */
+    dataItemProps?: AFormDataItemProps_dataItemProps<T>
 }
-const props = defineProps<AFormDataItemProps>()
+const props =
+    defineProps<
+        AFormDataItemProps<
+            | 'custom'
+            | 'text'
+            | 'password'
+            | 'textarea'
+            | 'radio'
+            | 'date'
+            | 'daterange'
+            | 'datetime'
+            | 'datetimerange'
+            | 'month'
+            | 'year'
+            | 'quarter'
+            | 'monthrange'
+            | 'yearrange'
+            | 'quarterrange'
+        >
+    >()
 
 // emits
 interface AFormItemRadioEmits {
@@ -60,7 +85,7 @@ const onUpdateValue = (value: any) => {
                     props.type === 'textarea' ||
                     props.type === 'password'
                 "
-                v-bind="props.dataItemProps"
+                v-bind="(props.dataItemProps as InputProps)"
                 :type="props.type"
                 :value="props.value"
                 @update:value="onUpdateValue"
@@ -68,7 +93,7 @@ const onUpdateValue = (value: any) => {
 
             <ARadio
                 v-if="props.type === 'radio'"
-                v-bind="props.dataItemProps"
+                v-bind="(props.dataItemProps as ARadioProps)"
                 :value="props.value"
                 @update:value="onUpdateValue"
             />
@@ -86,7 +111,7 @@ const onUpdateValue = (value: any) => {
                     props.type === 'yearrange' ||
                     props.type === 'quarterrange'
                 "
-                v-bind="props.dataItemProps"
+                v-bind="(props.dataItemProps as DatePickerProps)"
                 :type="props.type"
                 :value="props.value"
                 @update:value="onUpdateValue"

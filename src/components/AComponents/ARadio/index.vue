@@ -7,22 +7,17 @@ export default {
 
 <script lang="ts" setup>
 import { useAttrs } from 'vue'
-import {
-    NRadioGroup,
-    NRadio,
-    NSpace,
-    RadioGroupProps,
-    RadioProps as RadioItemProps,
-} from 'naive-ui'
-
-// props
-export interface ARadioProps extends RadioGroupProps {
-    options?: RadioItemProps[]
-}
-const props = defineProps<ARadioProps>()
+import { NRadioGroup, NRadio, NSpace, RadioGroupProps } from 'naive-ui'
+import { ARadioProps_options } from './types'
 
 // attrs
 const attrs = useAttrs()
+
+// props
+interface ARadioProps extends RadioGroupProps {
+    options?: ARadioProps_options
+}
+const props = defineProps<ARadioProps>()
 </script>
 
 <template>

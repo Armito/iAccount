@@ -48,6 +48,14 @@ const columns: Pickout<SearchTableProps, 'columns'> = [
     },
 ]
 
+const pagination = ref<Pickout<SearchTableProps, 'pagination'>>({
+    page: 1,
+    pageSize: 10,
+    pageSizes: [10, 20, 50, 100],
+    showSizePicker: true,
+    prefix: ({ itemCount }) => `Total is ${itemCount}.`,
+})
+
 const data = Array(978)
     .fill('a')
     .map((_, index) => {
@@ -57,14 +65,6 @@ const data = Array(978)
             addr: 'a' + index,
         }
     })
-
-const pagination = ref<Pickout<SearchTableProps, 'pagination'>>({
-    page: 1,
-    pageSize: 10,
-    pageSizes: [10, 20, 50, 100],
-    showSizePicker: true,
-    prefix: ({ itemCount }) => `Total is ${itemCount}.`,
-})
 
 const request: Pickout<SearchTableProps, 'request'> = (params) => {
     console.log(params)
@@ -86,11 +86,11 @@ const table = ref()
 <template>
     <SearchTable
         ref="table"
-        :columns="columns"
         :form-props="{
             inline: true,
             labelPlacement: 'left',
         }"
+        :columns="columns"
         :pagination="pagination"
         :request="request"
         :manual="true"
