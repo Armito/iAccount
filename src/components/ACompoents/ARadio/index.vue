@@ -1,3 +1,10 @@
+<script lang="ts">
+export default {
+    name: 'ARadio',
+    inheritAttrs: false,
+}
+</script>
+
 <script lang="ts" setup>
 import { useAttrs, ref } from 'vue'
 import { ElRadioGroup, RadioGroupProps, ElRadio } from 'element-plus'
@@ -6,7 +13,7 @@ import { ARadioItemProps } from './types'
 const attrs = useAttrs()
 
 interface ARadioProps extends Partial<Omit<RadioGroupProps, 'modelValue'>> {
-    modelValue: Pickout<RadioGroupProps, 'modelValue'>
+    modelValue?: Pickout<RadioGroupProps, 'modelValue'>
     options: ARadioItemProps[]
 }
 const props = defineProps<ARadioProps>()

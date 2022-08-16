@@ -24,5 +24,6 @@ module.exports = {
         'vue/valid-template-root': 'off',
         '@typescript-eslint/no-empty-interface': 'off',
         '@typescript-eslint/no-empty-function': 'off',
+        'vue/attributes-order': 'off',
     },
 }

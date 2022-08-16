@@ -11,7 +11,14 @@ export default defineConfig({
             '@': path.resolve(__dirname, 'src'),
         },
     },
-    plugins: [vue(), Pages(), ElementPlus()],
+    plugins: [
+        vue(),
+        Pages({
+            extensions: ['vue'],
+            exclude: ['**/components/*.vue', '*.ts'],
+        }),
+        ElementPlus(),
+    ],
     server: {
         port: 8080,
         hmr: {

@@ -7,6 +7,6 @@ export interface ARadioItemProps extends Partial<Omit<RadioProps, 'label'>> {
 
 export interface ARadioProps
     extends Partial<Omit<RadioGroupProps, 'modelValue'>> {
-    modelValue: Pickout<RadioGroupProps, 'modelValue'>
+    modelValue?: Pickout<RadioGroupProps, 'modelValue'>
     options: ARadioItemProps[]
 }
