@@ -1,6 +1,8 @@
 <script lang="tsx" setup>
 import { FunctionalComponent } from 'vue'
 import { CheckboxProps } from 'element-plus'
+import { ATable } from '@/components/ACompoents'
+import { ATableProps } from '@/components/ACompoents/types'
 
 interface CheProps extends Partial<CheckboxProps> {
     isAll: boolean
@@ -35,28 +37,29 @@ const generateData = (
         )
     })
 
-const columns = generateColumns(10)
+const columns: Pickout<ATableProps, 'columns'> = generateColumns(5)
 columns.unshift({
     key: `check`,
     width: 50,
     cellRenderer: () => <Che isAll={false} />,
 })
-const data = generateData(columns, 1000)
+const data = generateData(columns, 898)
+
+const request: Pickout<ATableProps, 'request'> = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({
+                data: data,
+                total: data.length,
+            })
+        }, 2000)
+    })
+}
 </script>
 
 <template>
-    <div style="height: 400px">
-        <el-auto-resizer>
-            <template #default="{ height, width }">
-                <el-table-v2
-                    :columns="columns"
-                    :data="data"
-                    :width="width"
-                    :height="height"
-                    fixed
-                />
-            </template>
-        </el-auto-resizer>
+    <div style="height: 400px; width: 600px">
+        <ATable :columns="columns" fixed :request="request" />
     </div>
 </template>
 
