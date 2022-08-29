@@ -45,21 +45,27 @@ columns.unshift({
 })
 const data = generateData(columns, 898)
 
-const request: Pickout<ATableProps, 'request'> = () => {
+const request: Pickout<ATableProps, 'request'> = (params) => {
     return new Promise((resolve) => {
+        console.log(params)
         setTimeout(() => {
             resolve({
                 data: data,
                 total: data.length,
             })
-        }, 2000)
+        }, 1000)
     })
 }
 </script>
 
 <template>
     <div style="height: 400px; width: 600px">
-        <ATable :columns="columns" fixed :request="request" />
+        <ATable
+            :columns="columns"
+            fixed
+            :request="request"
+            :pagination-props="{ currentPage: 3, pageSize: 100 }"
+        />
     </div>
 </template>
 
