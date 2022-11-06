@@ -27,7 +27,7 @@ interface AFormItemInputEmits {
 const aFormItemInputEmits = defineEmits<AFormItemInputEmits>()
 
 // other
-const onInput = (value: string) => {
+const onUpdateModelvalue = (value: string) => {
     aFormItemInputEmits('update:modelValue', value)
 }
 </script>
@@ -37,7 +37,7 @@ const onInput = (value: string) => {
         <el-input
             v-bind="aFormItemInputProps.inputProps"
             :model-value="aFormItemInputProps.modelValue"
-            @input="onInput"
+            @update:model-value="onUpdateModelvalue"
         />
     </el-form-item>
 </template>
