@@ -18,7 +18,9 @@
         "@vueuse/core": "^8.9.4",
         "axios": "^0.27.2",
         "element-plus": "^2.2.14",
+        "lodash": "^4.17.21",
         "pinia": "^2.0.20",
+        "random_chinese_fantasy_names": "^0.1.18",
         "uuid": "^9.0.0",
         "vue": "^3.2.37",
         "vue-router": "^4.1.4"
@@ -26,6 +28,7 @@
     "devDependencies": {
         "@commitlint/cli": "^17.0.3",
         "@commitlint/config-conventional": "^17.0.3",
+        "@types/lodash": "^4.14.191",
         "@types/node": "^18.7.11",
         "@typescript-eslint/eslint-plugin": "^5.34.0",
         "@typescript-eslint/parser": "^5.34.0",

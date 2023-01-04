@@ -26,5 +26,6 @@ module.exports = {
         '@typescript-eslint/no-empty-function': 'off',
         'vue/attributes-order': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
+        'vue/require-default-prop': 'off',
     },
 }
