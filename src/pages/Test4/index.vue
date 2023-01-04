@@ -1,15 +1,10 @@
 <template>
-    <ElForm :model="formModel">
-        <ElFormItem>
-            <AField
-                field-type="text"
-                v-model="formModel.name"
-                clearable
-                @input="onChaneg"
-            />
-        </ElFormItem>
+    <el-form :model="formModel" :label-width="100" v-loading="getLoading">
+        <el-form-item label="aaa">
+            <AField field-type="text" v-model="formModel.name" clearable />
+        </el-form-item>
 
-        <ElFormItem>
+        <el-form-item label="bbb">
             <AField
                 field-type="select"
                 v-model="formModel.gender"
@@ -18,31 +13,34 @@
                     { value: 2, label: 'okmnj' },
                 ]"
             />
-        </ElFormItem>
-    </ElForm>
+        </el-form-item>
+
+        <el-form-item>
+            <el-button type="primary" :loading="postLoading" @click="onSave">
+                submit
+            </el-button>
+        </el-form-item>
+    </el-form>
 </template>
 
 <script lang="ts" setup>
-import { reactive, watch } from 'vue'
-import { ElForm, ElFormItem } from 'element-plus'
+import { reactive } from 'vue'
 import AField from '@/components/AField/index.vue'
+import { useTask } from '@/hooks/useTask'
+import { getApi, saveApi } from '@/api'
 
 const formModel = reactive({
     name: '123',
     gender: 1,
 })
 
-const onChaneg = (e: any) => {
-    // console.log(e)
-}
+const { loading: getLoading } = useTask(getApi)
 
-watch(
-    formModel,
-    () => {
-        console.log(formModel)
-    },
-    { deep: true },
-)
+const { loading: postLoading, run: post } = useTask(saveApi, { mamual: true })
+
+const onSave = () => {
+    post(formModel)
+}
 </script>
 
 <style lang="scss" scoped></style>
